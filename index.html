@@ -141,7 +141,6 @@ section{padding-block:clamp(64px,8vw,118px)}
 .card::before{content:"";position:absolute;top:0;left:0;right:0;height:5px;
   background:linear-gradient(90deg,var(--accent),color-mix(in srgb,var(--accent),white 38%));z-index:2}
 .card-photo{position:relative;background:var(--surface-2);border-right:1px solid var(--border);min-height:480px}
-.card-photo image-slot{position:absolute;inset:0;width:100%;height:100%}
 .card-photo .portrait-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:60% 28%;display:block}
 .photo-badge{
   position:absolute;left:18px;bottom:18px;z-index:3;
@@ -269,8 +268,6 @@ footer{padding:38px 0;border-top:1px solid var(--border)}
 .foot a:hover{color:var(--accent)}
 .to-top{display:inline-flex;align-items:center;gap:8px;font-weight:600;color:var(--text)}
 .to-top:hover{color:var(--accent)}
-
-#tweaks-root{position:fixed;z-index:90}
 </style>
 </head>
 <body>
@@ -497,9 +494,6 @@ footer{padding:38px 0;border-top:1px solid var(--border)}
   </div>
 </footer>
 
-<div id="tweaks-root"></div>
-
-<script src="image-slot.js"></script>
 <script>
 /* ============ i18n / language toggle ============ */
 const I18N={
@@ -606,43 +600,6 @@ addEventListener('load',onScroll);
 checkActive();
 /* defer first reveal pass to after first paint so transitions run cleanly */
 requestAnimationFrame(()=>requestAnimationFrame(checkReveals));
-</script>
-
-<!-- Tweaks -->
-<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
-<script type="text/babel" src="tweaks-panel.jsx"></script>
-<script type="text/babel">
-const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
-  "accent":"#1f3a8a",
-  "font":"grotesk",
-  "dark":false
-}/*EDITMODE-END*/;
-
-function App(){
-  const [t,setTweak]=useTweaks(TWEAK_DEFAULTS);
-  React.useEffect(()=>{
-    const r=document.documentElement;
-    r.style.setProperty('--accent-base',t.accent);
-    r.setAttribute('data-font',t.font);
-    r.setAttribute('data-theme',t.dark?'dark':'light');
-  },[t.accent,t.font,t.dark]);
-  return (
-    <TweaksPanel title="Tweaks">
-      <TweakSection label="Theme"/>
-      <TweakToggle label="Dark mode" value={t.dark} onChange={v=>setTweak('dark',v)}/>
-      <TweakColor label="Accent" value={t.accent}
-        options={['#1f3a8a','#2a5fd6','#3f5572','#0e6b7c','#155e44']}
-        onChange={v=>setTweak('accent',v)}/>
-      <TweakSection label="Typography"/>
-      <TweakSelect label="Font pairing" value={t.font}
-        options={[{value:'grotesk',label:'Schibsted Grotesk + Libre Franklin'},{value:'serif',label:'Newsreader + Libre Franklin'},{value:'plex',label:'Space Grotesk + IBM Plex'}]}
-        onChange={v=>setTweak('font',v)}/>
-    </TweaksPanel>
-  );
-}
-ReactDOM.createRoot(document.getElementById('tweaks-root')).render(<App/>);
 </script>
 </body>
 </html>
