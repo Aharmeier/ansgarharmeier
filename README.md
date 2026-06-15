@@ -11,6 +11,7 @@ No build step — it's a self-contained static site with zero runtime dependenci
 - **Font switching** — three typeface sets (`grotesk`, `serif`, `plex`) via `data-font`.
 - **Bilingual (EN / DE)** — text swaps through `data-i18n` / `data-i18n-html` attributes and a language toggle.
 - **Hero portrait** — a real photo (`portrait.jpg`) rendered with `object-fit: cover`.
+- **Email buttons** — the hero and contact links use a `mailto:` with a prefilled subject, opening the visitor's mail client ready to send.
 
 ## Files
 

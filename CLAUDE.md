@@ -19,3 +19,4 @@ Personal portfolio site for Ansgar Harmeier (HubSpot CRM / Automation / AI & Age
 - **Run locally:** `python3 -m http.server 8765` → http://localhost:8765/ . Opening via `file://` works too now that there's no Babel/JSX fetch.
 - **Deploy:** `vercel --prod` from this dir (project is linked; scope `ansgarhs-projects`). Deploys upload local files directly — not yet wired to auto-deploy from GitHub.
 - Default look is hard-coded on `<html data-theme="light" data-font="grotesk">` with accent `--accent-base:#1f3a8a`. The old design "Tweaks" panel that switched these at runtime was removed; change them in the markup/CSS.
+- **Email buttons** (hero "Email me" + contact card) are plain `mailto:mail@ansgarharmeier.de` links with a URL-encoded prefilled `?subject=Anfrage über ansgarharmeier.de` — no JS, opens the OS mail client. The subject is static (not i18n'd).
