@@ -268,6 +268,21 @@ footer{padding:38px 0;border-top:1px solid var(--border)}
 .foot a:hover{color:var(--accent)}
 .to-top{display:inline-flex;align-items:center;gap:8px;font-weight:600;color:var(--text)}
 .to-top:hover{color:var(--accent)}
+
+/* Impressum */
+.foot .imprint-link{color:var(--muted);text-decoration:none}
+.foot .imprint-link:hover{color:var(--accent)}
+.imprint-dialog{max-width:520px;width:calc(100% - 40px);border:1px solid var(--border);border-radius:var(--r);background:var(--surface);color:var(--text);padding:0;box-shadow:var(--shadow);font-family:var(--font-body)}
+.imprint-dialog::backdrop{background:rgba(16,28,56,.42);backdrop-filter:blur(2px)}
+.imprint-inner{position:relative;padding:34px 36px 38px}
+.imprint-dialog h2{font-family:var(--font-head);font-size:23px;margin:0 0 16px;color:var(--text)}
+.imprint-dialog h3{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:22px 0 7px;font-weight:500}
+.imprint-dialog p{margin:0 0 4px;line-height:1.65;color:var(--muted)}
+.imprint-dialog p strong{color:var(--text);font-weight:600}
+.imprint-dialog a{color:var(--accent);text-decoration:none}
+.imprint-dialog a:hover{text-decoration:underline}
+.imprint-close{position:absolute;top:12px;right:14px;width:34px;height:34px;border:none;background:transparent;color:var(--muted);font-size:24px;line-height:1;cursor:pointer;border-radius:8px}
+.imprint-close:hover{background:var(--surface-2);color:var(--text)}
 </style>
 </head>
 <body>
@@ -489,10 +504,23 @@ footer{padding:38px 0;border-top:1px solid var(--border)}
 
 <footer>
   <div class="wrap foot">
-    <div>© <span id="yr"></span> Ansgar Harmeier · <span data-i18n="foot_sub">Personal Portfolio</span></div>
+    <div>© <span id="yr"></span> Ansgar Harmeier · <span data-i18n="foot_sub">Personal Portfolio</span> · <a class="imprint-link" href="#imprint" id="imprintLink" data-i18n="foot_imprint">Imprint</a></div>
     <a class="to-top" href="#top"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg><span data-i18n="to_top">Back to top</span></a>
   </div>
 </footer>
+
+<dialog id="imprint" class="imprint-dialog" aria-labelledby="imprint-title">
+  <div class="imprint-inner">
+    <button class="imprint-close" type="button" aria-label="Close">&times;</button>
+    <h2 id="imprint-title">Impressum</h2>
+    <p>Angaben gemäß § 5 DDG</p>
+    <p style="margin-top:10px"><strong>Ansgar Harmeier</strong><br>Fragenhütte 17B<br>41352 Korschenbroich</p>
+    <h3>Kontakt</h3>
+    <p>E-Mail: <a href="mailto:mail@ansgarharmeier.de">mail@ansgarharmeier.de</a></p>
+    <h3>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h3>
+    <p>Ansgar Harmeier<br>Fragenhütte 17B<br>41352 Korschenbroich</p>
+  </div>
+</dialog>
 
 <script>
 /* ============ i18n / language toggle ============ */
@@ -541,7 +569,7 @@ const I18N={
     contact_eyebrow:"Kontakt",contact_h2:"Lass uns etwas aufbauen, das wächst.",
     contact_p:"Offen für neue Herausforderungen und Beratungsprojekte. Am schnellsten erreichst du mich per E-Mail oder LinkedIn.",
     cl_email_label:"E-Mail",cl_loc_label:"Standort",cl_loc_val:"Düsseldorf, Deutschland",
-    foot_sub:"Persönliches Portfolio",to_top:"Nach oben"
+    foot_sub:"Persönliches Portfolio",to_top:"Nach oben",foot_imprint:"Impressum"
   }
 };
 /* capture English defaults from the markup so toggling back is lossless */
@@ -568,6 +596,14 @@ applyLang(_lang);
 
 /* year */
 document.getElementById('yr').textContent=new Date().getFullYear();
+
+/* Impressum dialog */
+const imprintDlg=document.getElementById('imprint');
+if(imprintDlg){
+  document.getElementById('imprintLink').addEventListener('click',e=>{e.preventDefault();imprintDlg.showModal();});
+  imprintDlg.querySelector('.imprint-close').addEventListener('click',()=>imprintDlg.close());
+  imprintDlg.addEventListener('click',e=>{if(e.target===imprintDlg)imprintDlg.close();});
+}
 
 /* nav scrolled border */
 const nav=document.getElementById('nav');
