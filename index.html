@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" data-font="grotesk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ansgar Harmeier — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Libre+Franklin:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============ DESIGN TOKENS ============ */
+:root{
+  --accent-base:#1f3a8a;
+  --accent:var(--accent-base);
+
+  --bg:oklch(0.992 0.004 255);
+  --surface:#ffffff;
+  --surface-2:oklch(0.975 0.006 255);
+  --border:oklch(0.915 0.009 255);
+  --border-strong:oklch(0.86 0.012 255);
+  --text:oklch(0.24 0.018 262);
+  --muted:oklch(0.50 0.022 262);
+  --faint:oklch(0.66 0.018 262);
+  --shadow:0 1px 2px rgba(16,28,56,.04), 0 18px 40px -20px rgba(16,28,56,.18);
+  --shadow-sm:0 1px 2px rgba(16,28,56,.05), 0 8px 22px -16px rgba(16,28,56,.16);
+
+  --font-head:'Schibsted Grotesk',system-ui,sans-serif;
+  --font-body:'Libre Franklin',system-ui,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+
+  --maxw:1120px;
+  --pad:clamp(20px,5vw,80px);
+  --r:18px;
+}
+html[data-font="serif"]{ --font-head:'Newsreader',Georgia,serif; --font-body:'Libre Franklin',system-ui,sans-serif; }
+html[data-font="plex"]{ --font-head:'Space Grotesk',system-ui,sans-serif; --font-body:'IBM Plex Sans',system-ui,sans-serif; }
+
+html[data-theme="dark"]{
+  --accent:color-mix(in srgb, var(--accent-base), white 26%);
+  --bg:oklch(0.205 0.018 262);
+  --surface:oklch(0.245 0.020 262);
+  --surface-2:oklch(0.285 0.022 262);
+  --border:oklch(0.34 0.02 262);
+  --border-strong:oklch(0.42 0.022 262);
+  --text:oklch(0.955 0.008 262);
+  --muted:oklch(0.74 0.018 262);
+  --faint:oklch(0.60 0.018 262);
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 24px 50px -24px rgba(0,0,0,.6);
+  --shadow-sm:0 1px 2px rgba(0,0,0,.3), 0 12px 28px -18px rgba(0,0,0,.5);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:92px;-webkit-text-size-adjust:100%}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:var(--font-body);
+  font-size:17px;line-height:1.65;font-weight:400;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  transition:background .4s ease,color .4s ease;
+}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4{font-family:var(--font-head);line-height:1.06;font-weight:700;letter-spacing:-0.02em}
+::selection{background:color-mix(in srgb,var(--accent),transparent 72%);}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding-inline:var(--pad)}
+
+/* ============ NAV ============ */
+.nav{
+  position:sticky;top:0;z-index:50;
+  background:color-mix(in srgb,var(--bg),transparent 22%);
+  backdrop-filter:saturate(160%) blur(14px);-webkit-backdrop-filter:saturate(160%) blur(14px);
+  border-bottom:1px solid transparent;
+  transition:border-color .3s ease,background .3s ease;
+}
+.nav.scrolled{border-bottom-color:var(--border);}
+.nav-inner{max-width:var(--maxw);margin:0 auto;padding:14px var(--pad);
+  display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:flex;align-items:center;gap:11px;font-family:var(--font-head);font-weight:700;letter-spacing:-0.01em}
+.brand .mono{
+  width:34px;height:34px;border-radius:9px;flex:none;
+  background:var(--accent);color:#fff;
+  display:grid;place-items:center;font-size:13px;letter-spacing:0.02em;font-weight:700;
+}
+.brand .bn{font-size:15.5px}
+.brand .bn small{display:block;font-family:var(--font-body);font-weight:500;font-size:11px;color:var(--muted);letter-spacing:0.04em;text-transform:uppercase;margin-top:-1px}
+.nav-links{display:flex;align-items:center;gap:4px}
+.nav-links a{
+  font-size:14px;font-weight:500;color:var(--muted);white-space:nowrap;
+  padding:8px 13px;border-radius:8px;position:relative;transition:color .2s ease;
+}
+.nav-links a:hover{color:var(--text)}
+.nav-links a.active{color:var(--text)}
+.nav-links a.active::after{content:"";position:absolute;left:13px;right:13px;bottom:2px;height:2px;border-radius:2px;background:var(--accent)}
+.nav-cta{
+  font-size:14px;font-weight:600;color:#fff;background:var(--accent);white-space:nowrap;
+  padding:9px 16px;border-radius:9px;transition:transform .15s ease,filter .2s ease;
+}
+.brand .bn{white-space:nowrap}
+.nav-cta:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.nav-right{display:flex;align-items:center;gap:18px}
+.lang-toggle{display:inline-flex;background:var(--surface-2);border:1px solid var(--border);border-radius:9px;padding:3px;gap:2px}
+.lang-toggle button{font-family:var(--font-body);font-size:12.5px;font-weight:600;letter-spacing:0.04em;color:var(--muted);background:none;border:none;padding:5px 10px;border-radius:6px;cursor:pointer;transition:background .2s ease,color .2s ease}
+.lang-toggle button.active{background:var(--accent);color:#fff}
+.lang-toggle button:not(.active):hover{color:var(--text)}
+.nav-toggle{display:none}
+@media(max-width:760px){
+  .nav-links{display:none}
+  .nav-cta{display:none}
+}
+
+/* ============ REVEAL ============ */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s cubic-bezier(.22,.61,.36,1),transform .7s cubic-bezier(.22,.61,.36,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal[data-d="1"]{transition-delay:.08s}
+.reveal[data-d="2"]{transition-delay:.16s}
+.reveal[data-d="3"]{transition-delay:.24s}
+.reveal[data-d="4"]{transition-delay:.32s}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+
+/* ============ SECTION SHELL ============ */
+section{padding-block:clamp(64px,8vw,118px)}
+.eyebrow{
+  font-family:var(--mono);font-size:12px;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--accent);font-weight:500;display:flex;align-items:center;gap:10px;margin-bottom:18px;
+}
+.eyebrow::before{content:"";width:26px;height:1.5px;background:var(--accent);display:inline-block}
+.sec-title{font-size:clamp(28px,4vw,42px);letter-spacing:-0.025em;margin-bottom:8px}
+.sec-lead{color:var(--muted);font-size:18px;max-width:60ch}
+
+/* ============ HERO / CARD ============ */
+.hero{padding-top:clamp(40px,6vw,72px);padding-bottom:clamp(40px,6vw,64px)}
+.card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:calc(var(--r) + 8px);box-shadow:var(--shadow);
+  display:grid;grid-template-columns:minmax(280px,420px) 1fr;
+  overflow:hidden;position:relative;
+}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:5px;
+  background:linear-gradient(90deg,var(--accent),color-mix(in srgb,var(--accent),white 38%));z-index:2}
+.card-photo{position:relative;background:var(--surface-2);border-right:1px solid var(--border);min-height:480px}
+.card-photo image-slot{position:absolute;inset:0;width:100%;height:100%}
+.photo-badge{
+  position:absolute;left:18px;bottom:18px;z-index:3;
+  display:flex;align-items:center;gap:8px;
+  background:color-mix(in srgb,var(--surface),transparent 6%);
+  border:1px solid var(--border);border-radius:999px;
+  padding:7px 14px 7px 11px;font-size:12.5px;font-weight:600;box-shadow:var(--shadow-sm);
+  backdrop-filter:blur(6px);
+}
+.dot-live{width:8px;height:8px;border-radius:50%;background:#16a34a;box-shadow:0 0 0 3px color-mix(in srgb,#16a34a,transparent 78%)}
+.card-body{padding:clamp(28px,3.4vw,52px);display:flex;flex-direction:column;justify-content:center;gap:18px}
+.hello{font-family:var(--mono);font-size:13px;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);font-weight:500}
+.hero-name{font-size:clamp(40px,6.2vw,72px);letter-spacing:-0.035em;line-height:0.98}
+.hero-role{font-family:var(--font-head);font-weight:600;font-size:clamp(17px,2.1vw,22px);color:var(--text);letter-spacing:-0.01em;line-height:1.3}
+.hero-role b{color:var(--accent);font-weight:600}
+.hero-tag{color:var(--muted);font-size:16.5px;max-width:46ch}
+.hero-meta{display:flex;flex-wrap:wrap;gap:9px;margin-top:2px}
+.chip{
+  display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:500;white-space:nowrap;
+  background:var(--surface-2);border:1px solid var(--border);border-radius:999px;padding:7px 14px;color:var(--text);
+}
+.chip svg{width:14px;height:14px;color:var(--muted);flex:none}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:8px}
+.btn{
+  display:inline-flex;align-items:center;gap:9px;font-family:var(--font-body);
+  font-size:15px;font-weight:600;padding:13px 22px;border-radius:11px;cursor:pointer;
+  border:1px solid transparent;transition:transform .15s ease,filter .2s ease,background .2s ease,border-color .2s ease;
+}
+.btn svg{width:17px;height:17px}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{filter:brightness(1.08);transform:translateY(-2px)}
+.btn-ghost{background:transparent;color:var(--text);border-color:var(--border-strong)}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+@media(max-width:820px){
+  .card{grid-template-columns:1fr}
+  .card-photo{min-height:360px;border-right:none;border-bottom:1px solid var(--border)}
+}
+
+/* ============ ABOUT ============ */
+.about-grid{display:grid;grid-template-columns:0.9fr 1.4fr;gap:clamp(28px,5vw,72px);align-items:start}
+.about-statement{font-family:var(--font-head);font-weight:600;font-size:clamp(22px,2.6vw,30px);line-height:1.32;letter-spacing:-0.02em}
+.about-statement em{font-style:normal;color:var(--accent)}
+.about-body p{color:var(--muted);font-size:17.5px;margin-bottom:18px}
+.about-body p:last-child{margin-bottom:0}
+.about-body .lead-in{color:var(--text);font-weight:500;margin-bottom:14px}
+.about-list{list-style:none;display:flex;flex-direction:column;gap:11px;margin:0 0 22px}
+.about-list li{display:flex;gap:12px;align-items:flex-start;color:var(--text);font-size:16px;font-weight:500;line-height:1.45}
+.about-list li svg{width:21px;height:21px;flex:none;color:var(--accent);margin-top:1px}
+.about-facts{display:flex;flex-wrap:wrap;gap:14px;margin-top:30px}
+.fact{flex:1 1 140px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px 20px}
+.fact .n{font-family:var(--font-head);font-weight:700;font-size:30px;letter-spacing:-0.03em;line-height:1}
+.fact .l{color:var(--muted);font-size:13px;margin-top:6px}
+@media(max-width:820px){.about-grid{grid-template-columns:1fr;gap:36px}}
+
+/* ============ SKILLS ============ */
+.skills-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+.skill{
+  background:var(--surface);border:1px solid var(--border);border-radius:16px;
+  padding:24px;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease;
+}
+.skill:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm);border-color:var(--border-strong)}
+.skill .k{font-family:var(--mono);font-size:11.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+.skill h3{font-size:20px;letter-spacing:-0.02em;margin-bottom:10px}
+.skill p{color:var(--muted);font-size:14.5px;line-height:1.55}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.tag{font-size:12.5px;font-weight:500;color:var(--text);background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:5px 11px;white-space:nowrap}
+.s-7{grid-column:span 7}.s-5{grid-column:span 5}.s-4{grid-column:span 4}.s-6{grid-column:span 6}
+@media(max-width:820px){.skill{grid-column:span 12 !important}}
+
+/* ============ TIMELINE ============ */
+.tl{position:relative;margin-top:8px}
+.tl::before{content:"";position:absolute;left:7px;top:6px;bottom:6px;width:2px;background:var(--border-strong)}
+.tl-item{position:relative;padding-left:42px;padding-bottom:34px}
+.tl-item:last-child{padding-bottom:0}
+.tl-item::before{content:"";position:absolute;left:0;top:5px;width:16px;height:16px;border-radius:50%;
+  background:var(--surface);border:3px solid var(--accent);box-shadow:0 0 0 4px var(--bg)}
+.tl-item.now::before{background:var(--accent)}
+.tl-row{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.tl-year{font-family:var(--mono);font-size:12.5px;letter-spacing:0.04em;color:var(--accent);font-weight:500;flex:none;min-width:104px}
+.tl-main{flex:1;min-width:240px}
+.tl-role{font-family:var(--font-head);font-weight:700;font-size:18.5px;letter-spacing:-0.015em}
+.tl-co{color:var(--muted);font-size:14.5px;font-weight:500;margin-top:2px;display:flex;align-items:center;gap:8px}
+.tl-co .badge-now{font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);border:1px solid color-mix(in srgb,var(--accent),transparent 60%);border-radius:6px;padding:2px 7px;font-weight:500}
+@media(max-width:560px){.tl-year{min-width:0;flex:1 1 100%}}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,64px)}
+@media(max-width:820px){.two-col{grid-template-columns:1fr;gap:48px}}
+
+/* ============ EDUCATION CARDS ============ */
+.edu{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:26px;margin-bottom:16px}
+.edu:last-child{margin-bottom:0}
+.edu .y{font-family:var(--mono);font-size:12.5px;color:var(--accent);letter-spacing:0.04em;margin-bottom:10px}
+.edu h3{font-size:19px;letter-spacing:-0.015em;line-height:1.25;margin-bottom:8px}
+.edu .inst{color:var(--muted);font-size:14.5px;font-weight:500}
+.edu .inst a:hover{color:var(--accent)}
+
+/* interests */
+.interests{display:flex;flex-wrap:wrap;gap:12px;margin-top:6px}
+.int{display:inline-flex;align-items:center;gap:11px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px 20px;font-weight:500;font-size:15px;transition:transform .2s ease,border-color .2s ease}
+.int:hover{transform:translateY(-3px);border-color:var(--accent)}
+.int .ic{width:20px;height:20px;color:var(--accent);flex:none}
+
+/* ============ CONTACT ============ */
+.contact{background:var(--surface)}
+.contact-card{
+  background:linear-gradient(135deg,var(--accent),color-mix(in srgb,var(--accent),black 22%));
+  border-radius:calc(var(--r) + 6px);padding:clamp(36px,5vw,68px);color:#fff;position:relative;overflow:hidden;
+}
+.contact-card::after{content:"";position:absolute;right:-80px;top:-80px;width:300px;height:300px;border-radius:50%;
+  background:rgba(255,255,255,.08)}
+.contact-card .eyebrow{color:rgba(255,255,255,.85)}
+.contact-card .eyebrow::before{background:rgba(255,255,255,.7)}
+.contact-card h2{color:#fff;font-size:clamp(30px,4.4vw,50px);letter-spacing:-0.03em;line-height:1.02;max-width:16ch;position:relative}
+.contact-card p{color:rgba(255,255,255,.85);font-size:18px;margin-top:16px;max-width:52ch;position:relative}
+.contact-list{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px;position:relative}
+.cl{display:inline-flex;align-items:center;gap:12px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);
+  border-radius:13px;padding:14px 20px;color:#fff;font-weight:500;font-size:15px;transition:background .2s ease,transform .15s ease}
+.cl:hover{background:rgba(255,255,255,.2);transform:translateY(-2px)}
+.cl svg{width:18px;height:18px;flex:none}
+.cl small{display:block;font-size:11.5px;color:rgba(255,255,255,.7);font-weight:400;text-transform:uppercase;letter-spacing:0.08em}
+
+/* footer */
+footer{padding:38px 0;border-top:1px solid var(--border)}
+.foot{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;color:var(--muted);font-size:13.5px}
+.foot a:hover{color:var(--accent)}
+.to-top{display:inline-flex;align-items:center;gap:8px;font-weight:600;color:var(--text)}
+.to-top:hover{color:var(--accent)}
+
+#tweaks-root{position:fixed;z-index:90}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#top">
+      <span class="mono">AH</span>
+      <span class="bn">Ansgar Harmeier<small data-i18n="brand_sub">Personal Portfolio</small></span>
+    </a>
+    <div class="nav-right">
+      <div class="nav-links" id="navlinks">
+        <a href="#about" data-i18n="nav_about">About</a>
+        <a href="#skills" data-i18n="nav_skills">Skills</a>
+        <a href="#experience" data-i18n="nav_experience">Experience</a>
+        <a href="#education" data-i18n="nav_education">Education</a>
+        <a href="#contact" data-i18n="nav_contact">Contact</a>
+      </div>
+      <a class="nav-cta" href="#contact" data-i18n="nav_cta">Get in touch</a>
+      <div class="lang-toggle" id="langToggle" role="group" aria-label="Language">
+        <button type="button" data-lang="en">EN</button>
+        <button type="button" data-lang="de">DE</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<span id="top"></span>
+
+<!-- HERO -->
+<header class="hero" data-screen-label="Hero">
+  <div class="wrap">
+    <div class="card reveal">
+      <div class="card-photo">
+        <image-slot id="portrait" shape="rect" fit="cover" placeholder="Drop your portrait photo"></image-slot>
+      </div>
+      <div class="card-body">
+        <span class="hello" data-i18n="hero_hello">Hello, I'm</span>
+        <h1 class="hero-name">Ansgar<br>Harmeier</h1>
+        <p class="hero-role" data-i18n-html="hero_role"><b>HubSpot</b> CRM, Automation, Artificial Intelligence and Agents</p>
+        <p class="hero-tag" data-i18n="hero_tag">A seasoned marketer with 10+ years helping brands grow revenue and leads through inbound strategy, automation and strong team leadership.</p>
+        <div class="hero-meta">
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span data-i18n="hero_chip_loc">Düsseldorf, Germany</span></span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h10"/></svg>HubSpot Practice Lead @ RYZE Digital</span>
+        </div>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="mailto:mail@ansgarharmeier.de"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><span data-i18n="btn_email">Email me</span></a>
+          <a class="btn btn-ghost" href="https://www.linkedin.com/in/ansgarharmeier/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 1 2.5 6 2.5 2.5 0 0 1 4.98 3.5zM2.9 8.5h4.16V21H2.9zM9.3 8.5h3.99v1.71h.06a4.37 4.37 0 0 1 3.93-2.16c4.2 0 4.98 2.77 4.98 6.37V21h-4.16v-5.5c0-1.31-.02-3-1.83-3s-2.11 1.43-2.11 2.9V21H9.3z"/></svg>LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ABOUT -->
+<section id="about" data-screen-label="About">
+  <div class="wrap about-grid">
+    <div class="reveal">
+      <div class="eyebrow" data-i18n="about_eyebrow">About</div>
+      <p class="about-statement" data-i18n-html="about_statement">I connect the dots between marketing, sales, service and operations — with <em>HubSpot</em> at the core.</p>
+      <div class="about-facts">
+        <div class="fact"><div class="n">10+</div><div class="l" data-i18n="fact1_l">Years in digital marketing</div></div>
+        <div class="fact"><div class="n">HubSpot</div><div class="l" data-i18n="fact2_l">CRM & Automation focus</div></div>
+      </div>
+    </div>
+    <div class="about-body reveal" data-d="1">
+      <p data-i18n="about_p1">As a CRM and Automation Consultant specializing in HubSpot, I help companies connect the dots between marketing, sales, customer service, and operations. With over a decade of experience in digital marketing and growth strategy, I bridge the gap between departments by integrating HubSpot with key business platforms such as ERP systems, billing tools, and third-party CRMs.</p>
+      <p class="lead-in" data-i18n="about_leadin">My core strengths lie in:</p>
+      <ul class="about-list">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="about_li1">HubSpot onboarding, customization, and automation</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="about_li2">Seamless platform integrations</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="about_li3">Inbound marketing strategy and full-funnel campaign execution</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="about_li4">Project management and cross-functional team leadership</span></li>
+      </ul>
+      <p data-i18n="about_p2">I'm a fast and flexible learner with a deep passion for building scalable processes and motivating teams to succeed. Whether it's optimizing lead flows, aligning sales pipelines, or improving customer data structures, I bring strategic clarity and technical know-how to every project.</p>
+      <p data-i18n="about_p3">Driven by curiosity and a desire to make businesses run smarter, I look forward to helping organizations turn complexity into growth opportunities.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" data-screen-label="Skills">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow" data-i18n="skills_eyebrow">Skills</div>
+      <h2 class="sec-title" data-i18n="skills_title">Professional toolkit</h2>
+      <p class="sec-lead" data-i18n="skills_lead">From platform architecture to campaign execution — the disciplines I bring to every engagement.</p>
+    </div>
+    <div class="skills-grid" style="margin-top:38px">
+      <div class="skill s-7 reveal">
+        <div class="k" data-i18n="sk1_k">Platform · Specialism</div>
+        <h3>HubSpot</h3>
+        <p data-i18n="sk1_p">End-to-end HubSpot practice across the full suite — implementation, migration, automation and enablement.</p>
+        <div class="tags"><span class="tag">Marketing Hub</span><span class="tag">Sales Hub</span><span class="tag">Service Hub</span><span class="tag">CRM & Workflows</span></div>
+      </div>
+      <div class="skill s-5 reveal" data-d="1">
+        <div class="k" data-i18n="sk2_k">Platform</div>
+        <h3>WordPress</h3>
+        <p data-i18n="sk2_p">Building and managing content-driven sites that convert — from landing pages to full corporate presences.</p>
+        <div class="tags"><span class="tag">CMS</span><span class="tag" data-i18n="tag_landing">Landing Pages</span></div>
+      </div>
+      <div class="skill s-6 reveal" data-d="1">
+        <div class="k" data-i18n="sk3_k">Discipline</div>
+        <h3 data-i18n="sk3_h">Inbound &amp; Online Marketing</h3>
+        <p data-i18n="sk3_p">Attract-engage-delight campaigns across every channel, built to grow qualified leads and revenue.</p>
+        <div class="tags"><span class="tag" data-i18n="tag_contentstrat">Content Strategy</span><span class="tag" data-i18n="tag_leadgen">Lead Gen</span><span class="tag">SEO</span><span class="tag" data-i18n="tag_email">Email & Nurture</span></div>
+      </div>
+      <div class="skill s-6 reveal" data-d="2">
+        <div class="k" data-i18n="sk4_k">Leadership</div>
+        <h3 data-i18n="sk4_h">Strategy &amp; Team Leadership</h3>
+        <p data-i18n="sk4_p">Project management and people leadership — aligning teams around strategy and motivating them to perform.</p>
+        <div class="tags"><span class="tag" data-i18n="tag_pm">Project Management</span><span class="tag" data-i18n="tag_consulting">Consulting</span><span class="tag" data-i18n="tag_mauto">Marketing Automation</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE + EDUCATION -->
+<section id="experience" data-screen-label="Experience">
+  <div class="wrap two-col">
+    <div>
+      <div class="reveal">
+        <div class="eyebrow" data-i18n="exp_eyebrow">Experience</div>
+        <h2 class="sec-title" data-i18n="exp_title">Work history</h2>
+      </div>
+      <div class="tl reveal" data-d="1" style="margin-top:30px">
+        <div class="tl-item now">
+          <div class="tl-row"><span class="tl-year" data-i18n="year_now">2024 — today</span><div class="tl-main">
+            <div class="tl-role">Senior Projektmanager &amp; HubSpot Practice Lead</div>
+            <div class="tl-co">RYZE Digital GmbH <span class="badge-now" data-i18n="badge_now">Current</span></div>
+          </div></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-row"><span class="tl-year">2023 — 2024</span><div class="tl-main">
+            <div class="tl-role">Senior Growth Consultant</div>
+            <div class="tl-co">Avidly Germany</div>
+          </div></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-row"><span class="tl-year">2020 — 2023</span><div class="tl-main">
+            <div class="tl-role">Head of HubSpot</div>
+            <div class="tl-co">Content moves</div>
+          </div></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-row"><span class="tl-year">2019 — 2020</span><div class="tl-main">
+            <div class="tl-role">Senior Marketing Manager</div>
+            <div class="tl-co">Linkfluence</div>
+          </div></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-row"><span class="tl-year">2019</span><div class="tl-main">
+            <div class="tl-role" data-i18n="role_communication">Marketing Communication</div>
+            <div class="tl-co">Covestro</div>
+          </div></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-row"><span class="tl-year">2015 — 2018</span><div class="tl-main">
+            <div class="tl-role">Online Marketing &amp; Content Manager</div>
+            <div class="tl-co">ARAG</div>
+          </div></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-row"><span class="tl-year">2011 — 2015</span><div class="tl-main">
+            <div class="tl-role" data-i18n="role_consultant">Communication Consultant</div>
+            <div class="tl-co">JP KOM GmbH</div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+    <div id="education" data-screen-label="Education" style="scroll-margin-top:92px">
+      <div class="reveal">
+        <div class="eyebrow" data-i18n="edu_eyebrow">Education</div>
+        <h2 class="sec-title" data-i18n="edu_title">Academic background</h2>
+      </div>
+      <div class="reveal" data-d="1" style="margin-top:30px">
+        <div class="edu">
+          <div class="y">2010 — 2011</div>
+          <h3 data-i18n="edu1_h">Master of Arts (M.A.), Communications</h3>
+          <div class="inst"><a href="https://www.rmit.edu.au" target="_blank" rel="noopener" data-i18n="edu1_inst">RMIT University · Melbourne, Australia ↗</a></div>
+        </div>
+        <div class="edu">
+          <div class="y">2005 — 2009</div>
+          <h3 data-i18n="edu2_h">Bachelor of Arts (B.A.), Social Sciences &amp; British and American Studies</h3>
+          <div class="inst"><a href="https://www.uni-bielefeld.de" target="_blank" rel="noopener" data-i18n="edu2_inst">Bielefeld University · Germany ↗</a></div>
+        </div>
+      </div>
+
+      <div class="reveal" data-d="2" style="margin-top:44px">
+        <div class="eyebrow" data-i18n="beyond_eyebrow">Beyond work</div>
+        <h2 class="sec-title" style="font-size:clamp(24px,3vw,32px)" data-i18n="interests_title">Interests</h2>
+        <div class="interests">
+          <span class="int"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9h13v4a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V9z"/><path d="M17 10h2a2 2 0 0 1 0 4h-2"/><path d="M7 4c0 1-1 1-1 2M11 4c0 1-1 1-1 2"/></svg><span data-i18n="int1">Coffee enthusiast</span></span>
+          <span class="int"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18"/></svg><span data-i18n="int2">Travelling the world</span></span>
+          <span class="int"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="3"/><path d="M5 21c1.5-5 4-7 7-7s5.5 2 7 7"/></svg><span data-i18n="int3">Scuba diving</span></span>
+          <span class="int"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 17c3-1 5 1 8 0s4-2 8-1"/><path d="M6 12l4-7 4 7"/></svg><span data-i18n="int4">Snowboarding</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact" data-screen-label="Contact">
+  <div class="wrap">
+    <div class="contact-card reveal">
+      <div class="eyebrow" data-i18n="contact_eyebrow">Contact</div>
+      <h2 data-i18n="contact_h2">Let's build something that grows.</h2>
+      <p data-i18n="contact_p">Open to new challenges and consulting engagements. The fastest way to reach me is email or LinkedIn.</p>
+      <div class="contact-list">
+        <a class="cl" href="mailto:mail@ansgarharmeier.de"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><span><small data-i18n="cl_email_label">Email</small>mail@ansgarharmeier.de</span></a>
+        <a class="cl" href="https://www.linkedin.com/in/ansgarharmeier/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 1 2.5 6 2.5 2.5 0 0 1 4.98 3.5zM2.9 8.5h4.16V21H2.9zM9.3 8.5h3.99v1.71h.06a4.37 4.37 0 0 1 3.93-2.16c4.2 0 4.98 2.77 4.98 6.37V21h-4.16v-5.5c0-1.31-.02-3-1.83-3s-2.11 1.43-2.11 2.9V21H9.3z"/></svg><span><small>LinkedIn</small>in/ansgarharmeier</span></a>
+        <span class="cl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span><small data-i18n="cl_loc_label">Based in</small><span data-i18n="cl_loc_val">Düsseldorf, Germany</span></span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <div>© <span id="yr"></span> Ansgar Harmeier · <span data-i18n="foot_sub">Personal Portfolio</span></div>
+    <a class="to-top" href="#top"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg><span data-i18n="to_top">Back to top</span></a>
+  </div>
+</footer>
+
+<div id="tweaks-root"></div>
+
+<script src="image-slot.js"></script>
+<script>
+/* ============ i18n / language toggle ============ */
+const I18N={
+  en:{},
+  de:{
+    nav_about:"Über mich",nav_skills:"Kompetenzen",nav_experience:"Erfahrung",nav_education:"Ausbildung",nav_contact:"Kontakt",
+    brand_sub:"Persönliches Portfolio",nav_cta:"Kontakt aufnehmen",
+    hero_hello:"Hallo, ich bin",
+    hero_role:"<b>HubSpot</b> CRM, Automatisierung, Künstliche Intelligenz und Agents",
+    hero_tag:"Erfahrener Marketer mit über 10 Jahren Erfahrung darin, Marken durch Inbound-Strategie, Automatisierung und starke Teamführung zu mehr Umsatz und Leads zu verhelfen.",
+    hero_chip_loc:"Düsseldorf, Deutschland",btn_email:"E-Mail schreiben",
+    about_eyebrow:"Über mich",
+    about_statement:"Ich verbinde Marketing, Vertrieb, Service und Operations — mit <em>HubSpot</em> im Zentrum.",
+    fact1_l:"Jahre im digitalen Marketing",fact2_l:"CRM- & Automatisierungs-Fokus",
+    about_p1:"Als CRM- und Automatisierungs-Berater mit Spezialisierung auf HubSpot helfe ich Unternehmen, Marketing, Vertrieb, Kundenservice und Operations miteinander zu verbinden. Mit über einem Jahrzehnt Erfahrung im digitalen Marketing und in der Wachstumsstrategie überbrücke ich die Lücke zwischen Abteilungen, indem ich HubSpot mit zentralen Geschäftsplattformen wie ERP-Systemen, Abrechnungstools und Drittanbieter-CRMs integriere.",
+    about_leadin:"Meine Kernkompetenzen:",
+    about_li1:"HubSpot-Onboarding, -Anpassung und -Automatisierung",
+    about_li2:"Nahtlose Plattform-Integrationen",
+    about_li3:"Inbound-Marketing-Strategie und Full-Funnel-Kampagnen",
+    about_li4:"Projektmanagement und abteilungsübergreifende Teamführung",
+    about_p2:"Ich bin ein schneller und flexibler Lerner mit großer Leidenschaft für den Aufbau skalierbarer Prozesse und die Motivation von Teams. Ob Optimierung von Lead-Flows, Ausrichtung von Sales-Pipelines oder Verbesserung von Kundendatenstrukturen — ich bringe strategische Klarheit und technisches Know-how in jedes Projekt.",
+    about_p3:"Angetrieben von Neugier und dem Wunsch, Unternehmen smarter zu machen, freue ich mich darauf, Organisationen zu helfen, Komplexität in Wachstumschancen zu verwandeln.",
+    skills_eyebrow:"Kompetenzen",skills_title:"Professionelles Toolkit",
+    skills_lead:"Von der Plattform-Architektur bis zur Kampagnen-Umsetzung — die Disziplinen, die ich in jedes Projekt einbringe.",
+    sk1_k:"Plattform · Spezialgebiet",
+    sk1_p:"End-to-End-HubSpot-Praxis über die gesamte Suite — Implementierung, Migration, Automatisierung und Enablement.",
+    sk2_k:"Plattform",
+    sk2_p:"Aufbau und Betreuung content-getriebener Websites, die konvertieren — von Landingpages bis zum kompletten Unternehmensauftritt.",
+    sk3_k:"Disziplin",sk3_h:"Inbound- & Online-Marketing",
+    sk3_p:"Attract-Engage-Delight-Kampagnen über alle Kanäle, ausgelegt auf mehr qualifizierte Leads und Umsatz.",
+    sk4_k:"Führung",sk4_h:"Strategie & Teamführung",
+    sk4_p:"Projektmanagement und Mitarbeiterführung — Teams auf die Strategie ausrichten und zu Höchstleistungen motivieren.",
+    tag_landing:"Landingpages",tag_contentstrat:"Content-Strategie",tag_leadgen:"Leadgenerierung",tag_email:"E-Mail & Nurturing",
+    tag_pm:"Projektmanagement",tag_consulting:"Beratung",tag_mauto:"Marketing-Automatisierung",
+    exp_eyebrow:"Erfahrung",exp_title:"Berufserfahrung",
+    year_now:"2024 — heute",badge_now:"Aktuell",
+    role_communication:"Marketing-Kommunikation",role_consultant:"Kommunikationsberater",
+    edu_eyebrow:"Ausbildung",edu_title:"Akademischer Werdegang",
+    edu1_h:"Master of Arts (M.A.), Kommunikation",
+    edu1_inst:"RMIT University · Melbourne, Australien ↗",
+    edu2_h:"Bachelor of Arts (B.A.), Sozialwissenschaften & Anglistik/Amerikanistik",
+    edu2_inst:"Universität Bielefeld · Deutschland ↗",
+    beyond_eyebrow:"Neben dem Beruf",interests_title:"Interessen",
+    int1:"Kaffee-Enthusiast",int2:"Reisen um die Welt",int3:"Tauchen",int4:"Snowboarden",
+    contact_eyebrow:"Kontakt",contact_h2:"Lass uns etwas aufbauen, das wächst.",
+    contact_p:"Offen für neue Herausforderungen und Beratungsprojekte. Am schnellsten erreichst du mich per E-Mail oder LinkedIn.",
+    cl_email_label:"E-Mail",cl_loc_label:"Standort",cl_loc_val:"Düsseldorf, Deutschland",
+    foot_sub:"Persönliches Portfolio",to_top:"Nach oben"
+  }
+};
+/* capture English defaults from the markup so toggling back is lossless */
+document.querySelectorAll('[data-i18n]').forEach(el=>{I18N.en[el.dataset.i18n]??=el.textContent;});
+document.querySelectorAll('[data-i18n-html]').forEach(el=>{I18N.en[el.dataset.i18nHtml]??=el.innerHTML;});
+
+function applyLang(lang){
+  if(lang!=='de')lang='en';
+  const d=I18N[lang],en=I18N.en;
+  document.documentElement.lang=lang;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.dataset.i18n;el.textContent=(d&&d[k]!=null)?d[k]:en[k];});
+  document.querySelectorAll('[data-i18n-html]').forEach(el=>{const k=el.dataset.i18nHtml;el.innerHTML=(d&&d[k]!=null)?d[k]:en[k];});
+  document.querySelectorAll('#langToggle button').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
+  try{localStorage.setItem('ah-lang',lang);}catch(e){}
+}
+let _lang='en';
+try{
+  const saved=localStorage.getItem('ah-lang');
+  if(saved){_lang=saved;}
+  else if((navigator.language||'').toLowerCase().startsWith('de')){_lang='de';}
+}catch(e){}
+document.querySelectorAll('#langToggle button').forEach(b=>b.addEventListener('click',()=>applyLang(b.dataset.lang)));
+applyLang(_lang);
+
+/* year */
+document.getElementById('yr').textContent=new Date().getFullYear();
+
+/* nav scrolled border */
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>{nav.classList.toggle('scrolled',scrollY>8)},{passive:true});
+
+/* reveal on scroll — rect-based, robust in any render context */
+const reveals=[...document.querySelectorAll('.reveal')];
+function checkReveals(){
+  const h=window.innerHeight;
+  for(const el of reveals){
+    if(el.classList.contains('in'))continue;
+    const r=el.getBoundingClientRect();
+    if(r.top<h*0.92 && r.bottom>0)el.classList.add('in');
+  }
+}
+
+/* active nav highlight */
+const links=[...document.querySelectorAll('#navlinks a')];
+const secs=['about','skills','experience','education','contact'].map(id=>document.getElementById(id)).filter(Boolean);
+function checkActive(){
+  const mid=window.innerHeight*0.4;let cur=null;
+  for(const s of secs){const r=s.getBoundingClientRect();if(r.top<=mid)cur=s.id;}
+  links.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+cur));
+}
+let ticking=false;
+function onScroll(){if(ticking)return;ticking=true;requestAnimationFrame(()=>{checkReveals();checkActive();ticking=false;});}
+addEventListener('scroll',onScroll,{passive:true});
+addEventListener('resize',onScroll,{passive:true});
+addEventListener('load',onScroll);
+checkActive();
+/* defer first reveal pass to after first paint so transitions run cleanly */
+requestAnimationFrame(()=>requestAnimationFrame(checkReveals));
+</script>
+
+<!-- Tweaks -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel">
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "accent":"#1f3a8a",
+  "font":"grotesk",
+  "dark":false
+}/*EDITMODE-END*/;
+
+function App(){
+  const [t,setTweak]=useTweaks(TWEAK_DEFAULTS);
+  React.useEffect(()=>{
+    const r=document.documentElement;
+    r.style.setProperty('--accent-base',t.accent);
+    r.setAttribute('data-font',t.font);
+    r.setAttribute('data-theme',t.dark?'dark':'light');
+  },[t.accent,t.font,t.dark]);
+  return (
+    <TweaksPanel title="Tweaks">
+      <TweakSection label="Theme"/>
+      <TweakToggle label="Dark mode" value={t.dark} onChange={v=>setTweak('dark',v)}/>
+      <TweakColor label="Accent" value={t.accent}
+        options={['#1f3a8a','#2a5fd6','#3f5572','#0e6b7c','#155e44']}
+        onChange={v=>setTweak('accent',v)}/>
+      <TweakSection label="Typography"/>
+      <TweakSelect label="Font pairing" value={t.font}
+        options={[{value:'grotesk',label:'Schibsted Grotesk + Libre Franklin'},{value:'serif',label:'Newsreader + Libre Franklin'},{value:'plex',label:'Space Grotesk + IBM Plex'}]}
+        onChange={v=>setTweak('font',v)}/>
+    </TweaksPanel>
+  );
+}
+ReactDOM.createRoot(document.getElementById('tweaks-root')).render(<App/>);
+</script>
+</body>
+</html>
