@@ -139,6 +139,7 @@ section{padding-block:clamp(64px,8vw,118px)}
   background:linear-gradient(90deg,var(--accent),color-mix(in srgb,var(--accent),white 38%));z-index:2}
 .card-photo{position:relative;background:var(--surface-2);border-right:1px solid var(--border);min-height:480px}
 .card-photo image-slot{position:absolute;inset:0;width:100%;height:100%}
+.card-photo .portrait-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 22%;display:block}
 .photo-badge{
   position:absolute;left:18px;bottom:18px;z-index:3;
   display:flex;align-items:center;gap:8px;
@@ -302,7 +303,7 @@ footer{padding:38px 0;border-top:1px solid var(--border)}
   <div class="wrap">
     <div class="card reveal">
       <div class="card-photo">
-        <image-slot id="portrait" shape="rect" fit="cover" placeholder="Drop your portrait photo"></image-slot>
+        <img id="portrait" class="portrait-photo" src="portrait.jpg" alt="Portrait of Ansgar Harmeier" loading="eager" decoding="async">
       </div>
       <div class="card-body">
         <span class="hello" data-i18n="hero_hello">Hello, I'm</span>
