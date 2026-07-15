@@ -4,12 +4,47 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ansgar Harmeier — Portfolio</title>
+<meta name="description" content="Ansgar Harmeier — HubSpot CRM, Automation & AI Consultant based in Düsseldorf, Germany. 10+ years helping companies grow through inbound marketing, automation and integrations.">
+<link rel="canonical" href="https://ansgarharmeier.de/">
+<meta property="og:type" content="profile">
+<meta property="og:title" content="Ansgar Harmeier — HubSpot CRM & Automation Consultant">
+<meta property="og:description" content="HubSpot CRM, Automation & AI Consultant based in Düsseldorf, Germany. 10+ years helping companies grow through inbound marketing, automation and integrations.">
+<meta property="og:url" content="https://ansgarharmeier.de/">
+<meta property="og:image" content="https://ansgarharmeier.de/portrait.jpg">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ansgar Harmeier — HubSpot CRM & Automation Consultant">
+<meta name="twitter:description" content="HubSpot CRM, Automation & AI Consultant based in Düsseldorf, Germany. 10+ years helping companies grow through inbound marketing, automation and integrations.">
+<meta name="twitter:image" content="https://ansgarharmeier.de/portrait.jpg">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="theme-color" content="#1f3a8a">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Libre+Franklin:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Libre+Franklin:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Ansgar Harmeier",
+  "jobTitle": "Teamlead HubSpot Consultants",
+  "description": "HubSpot CRM, Automation & AI Consultant with 10+ years of experience in inbound marketing, automation and team leadership.",
+  "url": "https://ansgarharmeier.de/",
+  "image": "https://ansgarharmeier.de/portrait.jpg",
+  "email": "mailto:mail@ansgarharmeier.de",
+  "sameAs": ["https://www.linkedin.com/in/ansgarharmeier/"],
+  "worksFor": {
+    "@type": "Organization",
+    "name": "RYZE Digital GmbH"
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Düsseldorf",
+    "addressRegion": "NRW",
+    "addressCountry": "DE"
+  }
+}
+</script>
 <style>
 /* ============ DESIGN TOKENS ============ */
 :root{
@@ -318,7 +353,11 @@ footer{padding:38px 0;border-top:1px solid var(--border)}
   <div class="wrap">
     <div class="card reveal">
       <div class="card-photo">
-        <img id="portrait" class="portrait-photo" src="portrait.jpg" alt="Portrait of Ansgar Harmeier" loading="eager" decoding="async">
+        <picture>
+          <source type="image/avif" srcset="portrait-480.avif 480w, portrait-800.avif 800w, portrait-1200.avif 1200w" sizes="(max-width: 820px) 100vw, 420px">
+          <source type="image/webp" srcset="portrait-480.webp 480w, portrait-800.webp 800w, portrait-1200.webp 1200w" sizes="(max-width: 820px) 100vw, 420px">
+          <img id="portrait" class="portrait-photo" src="portrait-800.jpg" srcset="portrait-480.jpg 480w, portrait-800.jpg 800w, portrait-1200.jpg 1200w" sizes="(max-width: 820px) 100vw, 420px" width="1200" height="799" alt="Portrait of Ansgar Harmeier" loading="eager" decoding="async" fetchpriority="high">
+        </picture>
       </div>
       <div class="card-body">
         <span class="hello" data-i18n="hero_hello">Hello, I'm</span>
