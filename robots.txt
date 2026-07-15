@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ansgarharmeier.de/sitemap.xml
+Sitemap: https://ansgarharmeier.vercel.app/sitemap.xml
