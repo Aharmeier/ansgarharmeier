@@ -8,9 +8,9 @@ No build step — it's a self-contained static site with zero runtime dependenci
 
 - **Sections** — Hero, About, Skills, Experience, Education, Interests, Contact.
 - **Light / dark theme** — driven by the `data-theme` attribute on `<html>`.
-- **Font switching** — three typeface sets (`grotesk`, `serif`, `plex`) via `data-font`.
+- **Font switching** — CSS is still in place for three typeface sets (`grotesk`, `serif`, `plex`) via `data-font`, but the runtime toggle UI was removed; the page is hard-coded to `grotesk` and only that family's Google Fonts are loaded (see Dependencies below).
 - **Bilingual (EN / DE)** — text swaps through `data-i18n` / `data-i18n-html` attributes and a language toggle.
-- **Responsive hero portrait** — `<picture>` with AVIF/WebP/JPEG sources at 480/800/1200/1600w, cutting the hero image payload from ~272KB down to ~30–50KB on typical viewports.
+- **Responsive hero portrait** — `<picture>` with AVIF/WebP/JPEG sources at 480/800/1200/1600/2400w, derived from a 6000×4000 source photo so the crop stays sharp on high-DPI displays.
 - **SEO metadata** — canonical URL, Open Graph/Twitter cards, a JSON-LD `Person` schema, plus `robots.txt` and `sitemap.xml`.
 - **Email buttons** — the hero and contact links use a `mailto:` with a prefilled subject, opening the visitor's mail client ready to send.
 
@@ -19,8 +19,9 @@ No build step — it's a self-contained static site with zero runtime dependenci
 | File | Purpose |
 |------|---------|
 | `index.html` | The full page — markup, design tokens, styles, i18n strings, SEO metadata, and behavior. |
-| `portrait.jpg` | Full-res hero portrait source (1600×1066); also the OG/Twitter share image. |
-| `portrait-{480,800,1200,1600}.{jpg,webp,avif}` | Responsive portrait tiers served via `<picture>`. |
+| `portrait-source.jpg` | Gitignored raw camera original (6000×4000) — master file for regenerating every portrait tile. |
+| `portrait.jpg` | 1600×1066 export derived from `portrait-source.jpg`; also the OG/Twitter share image. |
+| `portrait-{480,800,1200,1600,2400}.{jpg,webp,avif}` | Responsive portrait tiers served via `<picture>`. |
 | `sitemap.xml` / `robots.txt` | SEO crawl files. |
 | `favicon.svg` | AH monogram favicon. |
 | `apple-touch-icon.png` | 180×180 home-screen icon for iOS. |
@@ -38,7 +39,7 @@ python3 -m http.server 8765
 
 ## Dependencies
 
-None to install. The only runtime fetch is **Google Fonts** (Schibsted Grotesk, Libre Franklin, Newsreader, Space Grotesk, IBM Plex Sans/Mono).
+None to install. The only runtime fetch is **Google Fonts** (Schibsted Grotesk, Libre Franklin, IBM Plex Mono).
 
 ## Deployment
 
@@ -49,6 +50,8 @@ vercel --prod
 ```
 
 Source is on GitHub at https://github.com/Aharmeier/ansgarharmeier.
+
+The custom domain `ansgarharmeier.de` is registered but not wired up as a Vercel domain — DNS isn't manageable, so it stays an external 301 redirect straight to the `.vercel.app` URL above. Canonical/OG/JSON-LD tags intentionally point at `ansgarharmeier.vercel.app` for that reason.
 
 ## Contact
 
