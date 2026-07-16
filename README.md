@@ -10,15 +10,18 @@ No build step — it's a self-contained static site with zero runtime dependenci
 - **Light / dark theme** — driven by the `data-theme` attribute on `<html>`.
 - **Font switching** — three typeface sets (`grotesk`, `serif`, `plex`) via `data-font`.
 - **Bilingual (EN / DE)** — text swaps through `data-i18n` / `data-i18n-html` attributes and a language toggle.
-- **Hero portrait** — a real photo (`portrait.jpg`) rendered with `object-fit: cover`.
+- **Responsive hero portrait** — `<picture>` with AVIF/WebP/JPEG sources at 480/800/1200/1600w, cutting the hero image payload from ~272KB down to ~30–50KB on typical viewports.
+- **SEO metadata** — canonical URL, Open Graph/Twitter cards, a JSON-LD `Person` schema, plus `robots.txt` and `sitemap.xml`.
 - **Email buttons** — the hero and contact links use a `mailto:` with a prefilled subject, opening the visitor's mail client ready to send.
 
 ## Files
 
 | File | Purpose |
 |------|---------|
-| `index.html` | The full page — markup, design tokens, styles, i18n strings, and behavior. |
-| `portrait.jpg` | Hero portrait photo. |
+| `index.html` | The full page — markup, design tokens, styles, i18n strings, SEO metadata, and behavior. |
+| `portrait.jpg` | Full-res hero portrait source (1600×1066); also the OG/Twitter share image. |
+| `portrait-{480,800,1200,1600}.{jpg,webp,avif}` | Responsive portrait tiers served via `<picture>`. |
+| `sitemap.xml` / `robots.txt` | SEO crawl files. |
 | `favicon.svg` | AH monogram favicon. |
 | `apple-touch-icon.png` | 180×180 home-screen icon for iOS. |
 

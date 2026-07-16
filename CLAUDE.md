@@ -9,8 +9,11 @@ Personal portfolio site for Ansgar Harmeier (HubSpot CRM / Automation / AI & Age
 
 | File | Purpose |
 |------|---------|
-| `index.html` | The whole site — markup, design tokens, CSS, EN/DE i18n strings, and behavior (theme/font/lang toggles). |
-| `portrait.jpg` | Hero portrait photo, rendered via a plain `<img class="portrait-photo">` with `object-fit: cover`. |
+| `index.html` | The whole site — markup, design tokens, CSS, EN/DE i18n strings, SEO metadata (canonical, OG/Twitter tags, JSON-LD `Person` schema), and behavior (theme/font/lang toggles). |
+| `portrait.jpg` | Full-res hero portrait source (1600×1066), also the OG/Twitter share image and the `<img>` fallback for browsers without `<picture>` support. |
+| `portrait-{480,800,1200,1600}.{jpg,webp,avif}` | Responsive hero portrait tiers served via `<picture>` (AVIF → WebP → JPG fallback, matching `srcset`/`sizes`) — cuts hero LCP payload from the original 272KB down to ~30–50KB on typical viewports. |
+| `sitemap.xml` | Single-URL sitemap, referenced from `robots.txt`. |
+| `robots.txt` | Allows all crawlers; points to `sitemap.xml`. |
 | `favicon.svg` | AH monogram favicon (brand blue `#1f3a8a`). |
 | `apple-touch-icon.png` | 180×180 PNG home-screen icon (iOS ignores SVG apple-touch-icons). |
 
@@ -19,4 +22,5 @@ Personal portfolio site for Ansgar Harmeier (HubSpot CRM / Automation / AI & Age
 - **Run locally:** `python3 -m http.server 8765` → http://localhost:8765/ . Opening via `file://` works too now that there's no Babel/JSX fetch.
 - **Deploy:** `vercel --prod` from this dir (project is linked; scope `ansgarhs-projects`). Deploys upload local files directly — not yet wired to auto-deploy from GitHub.
 - Default look is hard-coded on `<html data-theme="light" data-font="grotesk">` with accent `--accent-base:#1f3a8a`. The old design "Tweaks" panel that switched these at runtime was removed; change them in the markup/CSS.
-- **Email buttons** (hero "Email me" + contact card) are plain `mailto:mail@ansgarharmeier.de` links with a URL-encoded prefilled `?subject=Anfrage über ansgarharmeier.de` — no JS, opens the OS mail client. The subject is static (not i18n'd).
+- **Email buttons** (hero "Email me" + contact card) are plain `mailto:mail@ansgarharmeier.de` links with a URL-encoded prefilled `?subject=Anfrage über ansgarharmeier.de` — no JS, opens the OS mail client. The subject is static (not i18n'd). If a visitor reports "nothing happens" on click, it's almost always a missing default mail handler on their OS/browser, not a site bug — the link itself is a plain anchor with no JS interception.
+- **Regenerating portrait variants** (if `portrait.jpg` changes): resize tiers with `sips -Z <width> portrait.jpg --out portrait-<width>.jpg`, then encode `cwebp -q 92` and `avifenc -q 82` per tier (quality settings from commit `0b8ed5d`). Keep the 1600w tier matching the source resolution.
