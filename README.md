@@ -51,7 +51,7 @@ vercel --prod
 
 Source is on GitHub at https://github.com/Aharmeier/ansgarharmeier.
 
-The custom domain is wired up as a Vercel domain: `www.ansgarharmeier.de` serves the site, the apex `ansgarharmeier.de` redirects to it, and the original `ansgarharmeier.vercel.app` deployment URL keeps working. Canonical/OG/JSON-LD tags, `sitemap.xml` and `robots.txt` all use the `www` domain.
+The custom domain is wired up as a Vercel domain: `www.ansgarharmeier.de` serves the site, and both the apex `ansgarharmeier.de` and the old `ansgarharmeier.vercel.app` URL 308-redirect to it — the latter via `vercel.json`, so the previously indexed address consolidates onto the domain rather than competing with it. Canonical/OG/JSON-LD tags, `sitemap.xml` and `robots.txt` all use the `www` domain.
 
 ## Contact
 
