@@ -43,7 +43,7 @@ None to install. The only runtime fetch is **Google Fonts** (Schibsted Grotesk, 
 
 ## Deployment
 
-Hosted on Vercel (static, no build step) and live at **https://ansgarharmeier.vercel.app**. Deploy with the Vercel CLI from the project root:
+Hosted on Vercel (static, no build step) and live at **https://www.ansgarharmeier.de**. Deploy with the Vercel CLI from the project root:
 
 ```bash
 vercel --prod
@@ -51,7 +51,7 @@ vercel --prod
 
 Source is on GitHub at https://github.com/Aharmeier/ansgarharmeier.
 
-The custom domain `ansgarharmeier.de` is registered but not wired up as a Vercel domain — DNS isn't manageable, so it stays an external 301 redirect straight to the `.vercel.app` URL above. Canonical/OG/JSON-LD tags intentionally point at `ansgarharmeier.vercel.app` for that reason.
+The custom domain is wired up as a Vercel domain: `www.ansgarharmeier.de` serves the site, the apex `ansgarharmeier.de` redirects to it, and the original `ansgarharmeier.vercel.app` deployment URL keeps working. Canonical/OG/JSON-LD tags, `sitemap.xml` and `robots.txt` all use the `www` domain.
 
 ## Contact
 
