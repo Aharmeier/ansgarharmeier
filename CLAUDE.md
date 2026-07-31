@@ -22,7 +22,9 @@ Personal portfolio site for Ansgar Harmeier (HubSpot CRM / Automation / AI & Age
 ## Working notes
 
 - **Run locally:** `python3 -m http.server 8765` → http://localhost:8765/ . Opening via `file://` works too now that there's no Babel/JSX fetch.
-- **Deploy:** `vercel --prod` from this dir (project is linked; scope `ansgarhs-projects`). Deploys upload local files directly — not yet wired to auto-deploy from GitHub.
+- **Deploy: just push to `main`.** The Vercel project **is** connected to `Aharmeier/ansgarharmeier` (GitHub integration, production branch `main`) and has been since the project was created on 2026-06-15 — every push to `main` builds and promotes to production on its own. Verified via the project's `link` field in the Vercel API.
+  - **`vercel project inspect` does not show this.** It prints General / Framework Settings and stops, with no Git section, which reads exactly like "no repo connected". Don't conclude anything about the Git link from it — check `vercel git connect` (it refuses if already connected) or the API `link` field.
+  - **Avoid manual `vercel --prod`.** It uploads the local working tree as-is, bypassing Git entirely, so a local checkout that is merely *behind* `origin/main` will silently roll production back — a clean `git status` says nothing about this. That is not hypothetical: on 2026-07-31 a `vercel --prod` from a tree two commits behind reverted the extra `vercel.json` alias redirects added in `cbc3e1e`. If you must deploy by hand, `git fetch && git status -sb` first and confirm you are not behind.
 - Default look is hard-coded on `<html data-theme="light" data-font="grotesk">` with accent `--accent-base:#1f3a8a`. The old design "Tweaks" panel that switched these at runtime was removed; change them in the markup/CSS.
 - **Dead CSS left over from that panel — don't assume any of it is live:**
   - `html[data-font="serif"]` / `["plex"]` — their Google Fonts (Newsreader, Space Grotesk, IBM Plex Sans) were dropped from the `<link>` import since nothing sets `data-font` to those values anymore, so don't rely on them without re-adding the font import first.

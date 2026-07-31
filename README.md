@@ -44,13 +44,15 @@ None to install. The only runtime fetch is **Google Fonts** (Schibsted Grotesk, 
 
 ## Deployment
 
-Hosted on Vercel (static, no build step) and live at **https://www.ansgarharmeier.de**. Deploy with the Vercel CLI from the project root:
+Hosted on Vercel (static, no build step) and live at **https://www.ansgarharmeier.de**. Source is on GitHub at https://github.com/Aharmeier/ansgarharmeier, and the two are connected: **pushing to `main` deploys to production automatically.** That's the normal way to ship.
+
+The Vercel CLI can also deploy directly:
 
 ```bash
 vercel --prod
 ```
 
-Source is on GitHub at https://github.com/Aharmeier/ansgarharmeier.
+Prefer the push. `vercel --prod` uploads your local working tree rather than what's on `main`, so deploying from a checkout that's behind the remote will quietly revert whatever it's missing — and a clean `git status` won't warn you, since being *behind* isn't a dirty tree. If you do use the CLI, run `git fetch && git status -sb` first.
 
 The custom domain is wired up as a Vercel domain: `www.ansgarharmeier.de` serves the site, and both the apex `ansgarharmeier.de` and the old `ansgarharmeier.vercel.app` URL 308-redirect to it — the latter via `vercel.json`, so the previously indexed address consolidates onto the domain rather than competing with it. Canonical/OG/JSON-LD tags, `sitemap.xml` and `robots.txt` all use the `www` domain.
 
