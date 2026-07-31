@@ -7,7 +7,7 @@ No build step — it's a self-contained static site with zero runtime dependenci
 ## Features
 
 - **Sections** — Hero, About, Skills, Experience, Education, Interests, Contact.
-- **Light / dark theme** — driven by the `data-theme` attribute on `<html>`.
+- **Light theme** — hard-coded as `<html data-theme="light">`. A full dark palette (`html[data-theme="dark"]`) is still in the CSS, but nothing ever sets the attribute — there's no toggle and no `prefers-color-scheme` listener — so dark mode is dormant rather than available.
 - **Font switching** — CSS is still in place for three typeface sets (`grotesk`, `serif`, `plex`) via `data-font`, but the runtime toggle UI was removed; the page is hard-coded to `grotesk` and only that family's Google Fonts are loaded (see Dependencies below).
 - **Bilingual (EN / DE)** — text swaps through `data-i18n` / `data-i18n-html` attributes and a language toggle.
 - **Responsive hero portrait** — `<picture>` with AVIF/WebP/JPEG sources at 480/800/1200/1600/2400w, derived from a 6000×4000 source photo so the crop stays sharp on high-DPI displays.
@@ -22,6 +22,7 @@ No build step — it's a self-contained static site with zero runtime dependenci
 | `portrait-source.jpg` | Gitignored raw camera original (6000×4000) — master file for regenerating every portrait tile. |
 | `portrait.jpg` | 1600×1066 export derived from `portrait-source.jpg`; also the OG/Twitter share image. |
 | `portrait-{480,800,1200,1600,2400}.{jpg,webp,avif}` | Responsive portrait tiers served via `<picture>`. |
+| `vercel.json` | 308 redirects from the `ansgarharmeier.vercel.app` host to `https://www.ansgarharmeier.de` — two rules, because `/:path*` doesn't match the bare `/`. |
 | `sitemap.xml` / `robots.txt` | SEO crawl files. |
 | `favicon.svg` | AH monogram favicon. |
 | `apple-touch-icon.png` | 180×180 home-screen icon for iOS. |
